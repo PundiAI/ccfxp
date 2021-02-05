@@ -38,7 +38,7 @@ public abstract class AbstractWebSocketClient {
     public abstract void onHeartBeat();
 
 
-    public abstract void onSubChannl(String symbol);
+    public abstract void onSubChannl(String topic, Object... args);
 
 
     protected void bootstrap(URI uri, final SimpleChannelInboundHandler handler) {

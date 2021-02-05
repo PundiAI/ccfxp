@@ -1,28 +1,26 @@
 package io.functionx.websocket;
 
 import com.alibaba.fastjson.JSON;
-import io.functionx.websocket.huobi.HuobiTopic;
-import io.functionx.websocket.huobi.HuobiWebSocketClient;
-import io.functionx.websocket.huobi.vo.HuobiMessage;
+import io.functionx.websocket.bithumb.BithumbWebSocketClient;
+import io.functionx.websocket.bithumb.vo.BithumbMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 
 
-
 @Slf4j
-public class HuobiWebSocketTest implements IExchangeWebSocketService {
+public class BithumbWebSocketTest implements IExchangeWebSocketService {
 
 
-    private static HuobiWebSocketClient huobiClient;
+    private static BithumbWebSocketClient bithumbClient;
 
 
     @Override
     public void onStart() {
 
-        huobiClient = new HuobiWebSocketClient(this);
+        bithumbClient = new BithumbWebSocketClient(this);
 
-        huobiClient.onConnect();
+        bithumbClient.onConnect();
 
     }
 
@@ -30,16 +28,16 @@ public class HuobiWebSocketTest implements IExchangeWebSocketService {
     @Override
     public void onSubTopics() {
 
-        huobiClient.onSubChannl(HuobiTopic.MARKET_DEPTH,"ethusdt");
+        bithumbClient.onSubChannl(BithumbWebSocketClient.MARKET_SYMBOL_ORDERBOOK_SUB, "ethusdt");
     }
 
 
     @Override
     public void onReceive(String msg) {
 
-        HuobiMessage huobiMessage = JSON.parseObject(msg, HuobiMessage.class);
+        BithumbMessage bithumbMessage = JSON.parseObject(msg, BithumbMessage.class);
 
-        Assert.assertNotNull(huobiMessage);
+        Assert.assertNotNull(bithumbMessage);
     }
 
     @Override

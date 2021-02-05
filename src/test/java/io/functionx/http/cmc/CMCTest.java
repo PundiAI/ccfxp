@@ -2,6 +2,7 @@ package io.functionx.http.cmc;
 
 import io.functionx.http.cmc.cryptocurrency.QuotesLatestFetch;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -25,7 +26,9 @@ public class CMCTest {
         final QuotesLatestFetch.QuoteLatestData quoteLatestData = response.get("NPXS");
         final Map<String, QuotesLatestFetch.Quote> quoteMap = quoteLatestData.getQuote();
         final QuotesLatestFetch.Quote quote = quoteMap.get("USD");
-        System.out.println(quote);
+
+        Assert.assertNotNull(quote);
+
     }
 
 

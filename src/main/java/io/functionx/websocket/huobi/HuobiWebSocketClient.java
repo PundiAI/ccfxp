@@ -26,8 +26,6 @@ public class HuobiWebSocketClient extends AbstractWebSocketClient {
     private static final URI uri = URI.create("wss://api-aws.huobi.pro/feed/ws");
 
 
-    private static final String MARKET_MBP_SUB = "market.%s.mbp.150";
-
 
     @Override
     public void onConnect() {
@@ -55,12 +53,13 @@ public class HuobiWebSocketClient extends AbstractWebSocketClient {
 
 
     @Override
-    public void onSubChannl(String symbol) {
+    public void onSubChannl(String topic, Object... args) {
         HuobiSubChannel huobiSubChannel = new HuobiSubChannel();
         huobiSubChannel.setId(UUID.randomUUID().toString());
-        huobiSubChannel.setSub(String.format(MARKET_MBP_SUB, symbol));
+        huobiSubChannel.setSub(String.format(topic, args));
         this.addSub(JSON.toJSONString(huobiSubChannel));
     }
+
 
 
     private static class Codes {
