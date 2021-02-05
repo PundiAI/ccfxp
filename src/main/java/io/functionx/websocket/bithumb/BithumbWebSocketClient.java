@@ -23,7 +23,7 @@ public class BithumbWebSocketClient extends AbstractWebSocketClient {
 
     private static final URI uri = URI.create("wss://global-api.bithumb.pro/message/realtime/ws");
 
-    private static final String MARKET_SYMBOL_ORDERBOOK_SUB = "ORDERBOOK10:%s";
+    public static final String MARKET_SYMBOL_ORDERBOOK_SUB = "ORDERBOOK10:%s";
 
 
     @Override
@@ -50,16 +50,19 @@ public class BithumbWebSocketClient extends AbstractWebSocketClient {
         this.sendMessage(JSON.toJSONString(bithumbSubChannel));
     }
 
-
     @Override
-    public void onSubChannl(String symbol) {
+    public void onSubChannl(String topic, Object... args) {
         BithumbSubChannel bithumbSubChannel = new BithumbSubChannel();
-        bithumbSubChannel.setArgs(Collections.singletonList(String.format(MARKET_SYMBOL_ORDERBOOK_SUB, symbol)));
+        bithumbSubChannel.setArgs(Collections.singletonList(String.format(topic, args)));
         this.addSub(JSON.toJSONString(bithumbSubChannel));
     }
 
 
-    private static class Codes {
+
+
+    public static class Codes {
+
+
 
         private static final int PING_CODE = 0;
 

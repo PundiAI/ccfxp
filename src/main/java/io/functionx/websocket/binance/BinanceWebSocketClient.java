@@ -26,7 +26,7 @@ public class BinanceWebSocketClient extends AbstractWebSocketClient {
 
     private static final URI uri = URI.create("wss://stream.binance.com:9443/ws");
 
-    private static final String MARKET_SYMBOL_DEPTH_SUB = "%s@depth@1000ms";
+    public static final String MARKET_SYMBOL_DEPTH_SUB = "%s@depth@%s";
 
 
     @Override
@@ -55,10 +55,10 @@ public class BinanceWebSocketClient extends AbstractWebSocketClient {
 
 
     @Override
-    public void onSubChannl(String symbol) {
+    public void onSubChannl(String topic, Object... args) {
         SubChannel subChannel = new SubChannel();
         subChannel.setId(new Random().nextInt(Integer.MAX_VALUE));
-        subChannel.setParams(Collections.singletonList(String.format(MARKET_SYMBOL_DEPTH_SUB, symbol)));
+        subChannel.setParams(Collections.singletonList(String.format(topic, args)));
         this.addSub(JSON.toJSONString(subChannel));
     }
 
